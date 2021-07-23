@@ -1,0 +1,21 @@
+
+npx create-react-app admin-template
+cd admin-template
+npm install --save typescript @types/node @types/react @types/react-dom @types/jest
+
+or
+npx create-react-app my-app --template typescript
+cd admin-template
+
+npm install react-router-dom
+npm install @types/react-router-dom
+
+npm install @material-ui/core
+npm install @material-ui/lab
+npm install @material-ui/icons
+npm install @fontsource/roboto
+
+
+npm i history
+
+npm audit fix
