@@ -30,9 +30,14 @@ const globalStyles = makeStyles((theme) => ({
         margin: '2rem 3rem',
         display: 'flex',
         flexDirection: 'column',
+        verticalAlign: 'middle',
         '@media (max-width:780px)': {
             margin: '0.5rem 0 0 0'
         }
+    },
+    formLabel: {
+        margin: '1rem 1rem 0 0',
+        fontSize: '16px'
     },
     formControl: {
         margin: '1rem 1rem 0 1rem',

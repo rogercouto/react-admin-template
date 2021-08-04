@@ -14,8 +14,7 @@ const HelpPage = ( props : any) => {
             </Breadcrumbs>
             <Paper className={classes.paper}>
                 <Typography variant="h1">Help</Typography>
-                
-                
+                <p>To log-in use e-mail: admin@template.com and password: admin</p>                
             </Paper>
         </div>
     );

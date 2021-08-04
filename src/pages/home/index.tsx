@@ -7,9 +7,9 @@ const HomePage = ( props : any ) => {
     return(
         <div>
             <Paper className={classes.paper}>
-                <Typography variant="h1">Bem vindo ao Admin template</Typography>
+                <Typography variant="h1">Welcome to Admin template</Typography>
                 <br />
-                <Typography variant="h2">Modelo de área administrativa customizável</Typography>
+                <Typography variant="h2">Template for react app using Material UI and Typescript</Typography>
             </Paper>
         </div>
     );

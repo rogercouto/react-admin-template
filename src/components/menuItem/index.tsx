@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-const MenuItem = ( props : any ) => {
+const CustomMenuItem = ( props : any ) => {
 
     const styles = useStyles();
     const style = props.isNested ? styles.nested : styles.default;
@@ -64,7 +64,7 @@ const MenuItem = ( props : any ) => {
     }
 }
 
-MenuItem.propTypes = {
+CustomMenuItem.propTypes = {
     description: PropTypes.string.isRequired,  
     icon: PropTypes.element.isRequired,
 
@@ -77,10 +77,10 @@ MenuItem.propTypes = {
     children: PropTypes.node,
 };
 
-MenuItem.defaultProps = {
+CustomMenuItem.defaultProps = {
     withTooltip: false,
     isNested: false,
     disabled: false
 }
 
-export default MenuItem;
+export default CustomMenuItem;

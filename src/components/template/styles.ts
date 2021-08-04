@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
-import { deepOrange } from '@material-ui/core/colors';
+import { grey, deepOrange } from '@material-ui/core/colors';
 
 const drawerWidth = 240;
 
@@ -95,6 +95,12 @@ const useStyles = makeStyles((theme) => ({
     topRightButton: {
         color: '#FFFFFF',
     },
+    menuLink: {
+      color: grey[700],
+      '&:hover':{
+        textDecoration: 'none'
+      }
+    }
 }));
 
 export default useStyles;

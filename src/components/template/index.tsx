@@ -5,7 +5,9 @@ import { createBrowserHistory } from 'history';
 import clsx from 'clsx';
 
 import { CssBaseline, Drawer, Box, AppBar, Toolbar, Typography,
-IconButton, Container, Grid, List, Divider, Avatar, Snackbar, Button } from '@material-ui/core';
+IconButton, Container, Grid, List, Divider, Avatar, Snackbar, 
+Button, Tooltip, Menu, MenuItem, Link } from '@material-ui/core';
+
 import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
 
 import MenuIcon from '@material-ui/icons/Menu';
@@ -22,7 +24,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import TuneIcon from '@material-ui/icons/Tune';
 import HelpIcon from '@material-ui/icons/Help';
 
-import MenuItem from '../menuItem';
+import CustomMenuItem from '../menuItem';
 import CollapseMenu from '../collapseMenu';
 import SubmenuItem from '../submenuItem';
 
@@ -52,6 +54,8 @@ const Template = ( props : any ) => {
     
     const [loginOpen, setLoginOpen] = useState<boolean>(false);
     const [loginRefresh, setLoginRefresh] = useState<number>(0);
+
+    const [aMenuAnchorEl, setAMenuAnchorEl] = useState<any | null>(null);
 
     const toaster = useContext(ToastContext);
 
@@ -83,14 +87,14 @@ const Template = ( props : any ) => {
         const withTooltip = !isMobile() && !isDrawerMaxed();
         return (
             <List>
-                <MenuItem 
+                <CustomMenuItem 
                     description="Home"
                     path="/"
                     icon={<HomeIcon />}
                     withTooltip={withTooltip}
                 />
                 <Divider />
-                <MenuItem 
+                <CustomMenuItem 
                     description="Account info"
                     path="/account"
                     icon={<FaceIcon />}
@@ -123,7 +127,7 @@ const Template = ( props : any ) => {
                     />
                 </CollapseMenu>
                 <Divider />
-                <MenuItem 
+                <CustomMenuItem 
                     description="Settings"
                     path="/settings"
                     icon={<TuneIcon />}
@@ -131,7 +135,7 @@ const Template = ( props : any ) => {
                     disabled={!haveUser()}
                 />
                 <Divider />
-                <MenuItem 
+                <CustomMenuItem 
                     description="Help"
                     path="/help"
                     icon={<HelpIcon />}
@@ -205,21 +209,33 @@ const Template = ( props : any ) => {
         setUser(null);
     }
 
+    
+    const handleAvatarClick = (target : any) => {
+        setAMenuAnchorEl(target);
+    };
+    
+    const handleAvatarMenuClose = () => {
+      setAMenuAnchorEl(null);
+    };
+
     const TopRightMenu = () => {
         if (user){
             return (
                 <Fragment>
-                    <Button className={classes.topRightButton} onClick={confirmLogout}>
-                        <NoMeetingRoomIcon />
-                    </Button>
-                    <Avatar className={classes.orange}>A</Avatar>
+                    <Tooltip title="Logout">
+                        <Button className={classes.topRightButton} onClick={confirmLogout}>
+                            <NoMeetingRoomIcon />
+                        </Button>
+                    </Tooltip>
                 </Fragment>
             );
         }
         return(
-            <Button className={classes.topRightButton} onClick={openLogin}>
-                <MeetingRoomIcon />
-            </Button>
+            <Tooltip title="Login">
+                <Button className={classes.topRightButton} onClick={openLogin}>
+                    <MeetingRoomIcon />
+                </Button>
+            </Tooltip>
         );
     };
 
@@ -253,6 +269,14 @@ const Template = ( props : any ) => {
                     </Typography>
                     <span className={classes.expand}/>
                     <TopRightMenu />
+                    <Button aria-controls="simple-menu" aria-haspopup="true" 
+                        style={{ display: user? 'block' : 'none'}}
+                        onClick={(e)=>{
+                            handleAvatarClick(e.currentTarget);
+                        }}
+                    >
+                        <Avatar className={classes.orange} >A</Avatar>
+                    </Button>
                 </Toolbar>
             </AppBar>
             <FixedDrawer />
@@ -270,6 +294,23 @@ const Template = ( props : any ) => {
                 </Box>
                 </Container>
             </main>
+            <Menu
+                id="user-menu"
+                anchorEl={aMenuAnchorEl}
+                keepMounted
+                open={Boolean(aMenuAnchorEl)}
+                onClose={handleAvatarMenuClose}
+            >
+                <MenuItem>
+                    <Link href="/account" className={classes.menuLink}>
+                        My Account
+                    </Link>
+                </MenuItem>
+                <MenuItem onClick={()=>{
+                    confirmLogout();
+                    handleAvatarMenuClose();
+                }}>Logout</MenuItem>
+            </Menu>
             <LoginDialog 
                 open={loginOpen}
                 onSubmit={confirmLogin}
